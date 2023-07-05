@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Blue</string>
+    <string name="homepage">Home</string>
+    <string name="community">Community</string>
+    <string name="notification">Notification</string>
+    <string name="mine">Me</string>
 </resources>

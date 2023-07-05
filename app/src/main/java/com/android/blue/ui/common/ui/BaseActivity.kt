@@ -34,4 +34,8 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
+
+    private fun observe() {
+
+    }
 }

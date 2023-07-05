@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android.blue.R
 import com.android.blue.databinding.ActivityMainBinding
+import com.android.blue.extension.setOnClickListener
 import com.android.blue.ui.common.ui.BaseActivity
 
 class MainActivity : BaseActivity() {
@@ -22,14 +23,20 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupViews() {
+        observe()
+//        setOnClickListener(binding.navi)
+
+    }
+
+    private fun observe() {
 
     }
 
 
     companion object {
-
         fun start(context: Context) {
             context.startActivity(Intent(context, MainActivity::class.java))
         }
     }
+
 }
