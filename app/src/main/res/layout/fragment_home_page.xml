@@ -6,8 +6,19 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomePageFragment">
 
+    <include
+        android:id="@+id/titleBar"
+        layout="@layout/layout_main_page_title_bar" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="this is main frag" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 </LinearLayout>

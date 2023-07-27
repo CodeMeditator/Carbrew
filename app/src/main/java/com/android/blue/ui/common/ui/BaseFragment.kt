@@ -9,8 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.android.blue.R
 import com.android.blue.extension.logD
 import com.android.blue.ui.common.callback.RequestLifecycle
+import com.eyepetizer.android.event.MessageEvent
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 open class BaseFragment : Fragment(), RequestLifecycle {
@@ -20,6 +24,11 @@ open class BaseFragment : Fragment(), RequestLifecycle {
 
     lateinit var activity: Activity
     protected val TAG: String = this.javaClass.simpleName
+
+    /**
+     * Fragment中inflate出来的布局。
+     */
+    protected var rootView: View? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,9 +66,14 @@ open class BaseFragment : Fragment(), RequestLifecycle {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    fun onCreateView(view: View) {
+    fun onCreateView(view: View): View {
         logD(TAG, "BaseFragment-->onCreateView()")
-
+        rootView = view
+        return view
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onMessageEvent(messageEvent: MessageEvent) {
+        logD(TAG, "BaseFragment-->onMessageEvent()")
+    }
 }

@@ -3,6 +3,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        jcenter()
+
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +12,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
+        maven { url "https://dl.bintray.com/relish-wang/maven/" } // 添加这行
+
     }
 }
 rootProject.name = "Blue"

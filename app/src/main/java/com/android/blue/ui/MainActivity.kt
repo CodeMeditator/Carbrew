@@ -5,14 +5,21 @@ import android.content.Intent
 import android.os.BaseBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.android.blue.R
 import com.android.blue.databinding.ActivityMainBinding
 import com.android.blue.extension.setOnClickListener
 import com.android.blue.ui.common.ui.BaseActivity
 import com.android.blue.ui.home.HomePageFragment
+import com.eyepetizer.android.event.RefreshEvent
+
 import kotlinx.coroutines.internal.artificialFrame
+import org.greenrobot.eventbus.EventBus
+import kotlin.math.log
 
 class MainActivity : BaseActivity() {
 
@@ -43,12 +50,14 @@ class MainActivity : BaseActivity() {
                 binding.navigationBar.btnHomePage -> {
                     notificationUiRefresh(0)
                     setTabSelection(0)
+
                 }
 
 
             }
         }
 
+        setTabSelection(0)
 
     }
 
@@ -72,7 +81,7 @@ class MainActivity : BaseActivity() {
                     TODO()
                 }
             }
-        }
+        }.commitAllowingStateLoss()
     }
 
     private fun clearAllSelected() {
@@ -95,7 +104,8 @@ class MainActivity : BaseActivity() {
     private fun notificationUiRefresh(selectionIndex: Int) {
         when (selectionIndex) {
             0 -> {
-
+                if (binding.navigationBar.ivHomePage.isSelected) EventBus.getDefault()
+                    .post(RefreshEvent(HomePageFragment::class.java))
             }
 
             1 -> {
