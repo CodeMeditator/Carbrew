@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android.blue.ui.common.view.TypefaceTextView
+    <com.android.carbrew.ui.common.view.TypefaceTextView
         android:id="@+id/tvHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@id/ivHomePage"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android.blue.ui.common.view.TypefaceTextView
+    <com.android.carbrew.ui.common.view.TypefaceTextView
         android:id="@+id/tvCommunity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toEndOf="@id/ivRelease"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android.blue.ui.common.view.TypefaceTextView
+    <com.android.carbrew.ui.common.view.TypefaceTextView
         android:id="@+id/tvNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toEndOf="@id/ivNotification"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android.blue.ui.common.view.TypefaceTextView
+    <com.android.carbrew.ui.common.view.TypefaceTextView
         android:id="@+id/tvMine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

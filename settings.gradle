@@ -17,5 +17,5 @@ dependencyResolutionManagement {
 
     }
 }
-rootProject.name = "Blue"
+rootProject.name = "Carbrew"
 include ':app'
