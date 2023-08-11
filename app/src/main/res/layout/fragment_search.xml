@@ -14,7 +14,7 @@
         android:visibility="invisible"
         tools:visibility="visible">
 
-        <com.android.carbrew.ui.common.view.TypefaceTextView
+        <com.android.carbrew.ui.common.view.TypefaceEditText
             android:id="@+id/etQuery"
             android:layout_width="0dp"
             android:layout_height="64dp"
@@ -22,7 +22,7 @@
             android:layout_marginStart="13dp"
             android:layout_weight="1"
             android:background="@drawable/shape_search_edit_text_bg"
-            android:drawableStart="@drawable/search"
+            android:drawableStart="@drawable/ic_search_gray_17dp"
             android:drawablePadding="2.5dp"
             android:gravity="center_vertical"
             android:hint="@string/search_own"
@@ -41,8 +41,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="17dp"
             android:text="取消"
-            android:textSize="14sp"
-            android:typeface="fzlLTypeface" />
+            android:textSize="14sp" />
 
 
     </LinearLayout>

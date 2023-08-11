@@ -2,16 +2,21 @@ package com.android.carbrew.ui.common.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.android.carbrew.R
+import com.android.carbrew.extension.setOnClickListener
+import com.android.carbrew.ui.search.SearchFragment
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 
 abstract class BaseViewPagerFragment : BaseFragment() {
+    protected var ivSearch: ImageView? = null
+
     protected var viewPager: ViewPager2? = null
     protected var tabLayout: CommonTabLayout? = null
     protected var pageChangeCallback: PageChangeCallback? = null
@@ -34,6 +39,12 @@ abstract class BaseViewPagerFragment : BaseFragment() {
     abstract val createFragments: Array<Fragment>
 
     open fun setupViews() {
+        ivSearch = rootView?.findViewById(R.id.ivSearch)
+        setOnClickListener(ivSearch) {
+            if (this == ivSearch) {
+                SearchFragment.switchFragment(activity)
+            }
+        }
         initViewPager()
     }
 

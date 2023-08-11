@@ -1,12 +1,20 @@
 package com.android.carbrew.logic.network
 
 import android.os.Build
+import com.android.carbrew.extension.logV
+import com.android.carbrew.extension.screenPixel
+import com.android.carbrew.logic.network.api.MainPageService
+import com.android.carbrew.ui.common.callback.GsonTypeAdapterFactory
+import com.android.carbrew.util.GlobalUtil
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactoryf
 import java.io.IOException
 import java.util.Date
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object ServiceCreator {
     const val BASE_URL = "http://baobab.kaiyanapp.com/"
@@ -28,7 +36,6 @@ object ServiceCreator {
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
 
     class LoggingInterceptor : Interceptor {
-
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
@@ -71,8 +78,8 @@ object ServiceCreator {
                 addQueryParameter("udid", GlobalUtil.getDeviceSerial())
                 //针对开眼官方【首页推荐 】api 变动， 需要单独做处理。原因：附加 vc、vn 这两个字段后，请求接口无响应。
                 if (!originalHttpUrl.toString().contains(MainPageService.HOMEPAGE_RECOMMEND_URL)) {
-                    addQueryParameter("vc", GlobalUtil.eyepetizerVersionCode.toString())
-                    addQueryParameter("vn", GlobalUtil.eyepetizerVersionName)
+                    addQueryParameter("vc", GlobalUtil.carbrewVersionCode.toString())
+                    addQueryParameter("vn", GlobalUtil.carbrewVersionName)
                 }
                 addQueryParameter("size", screenPixel())
                 addQueryParameter("deviceModel", GlobalUtil.deviceModel)

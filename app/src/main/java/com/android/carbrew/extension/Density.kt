@@ -9,3 +9,9 @@ fun dp2px(dp: Float): Int {
     val scale = CarbrewApplication.context.resources.displayMetrics.density
     return (dp * scale + 0.5f).toInt()
 }
+
+fun screenPixel(): String {
+    CarbrewApplication.context.resources.displayMetrics.run {
+        return "${widthPixels}X${heightPixels}"
+    }
+}

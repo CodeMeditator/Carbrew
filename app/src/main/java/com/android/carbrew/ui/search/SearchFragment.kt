@@ -1,5 +1,6 @@
 package com.android.carbrew.ui.search
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +13,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.carbrew.R
 import com.android.carbrew.databinding.FragmentSearchBinding
 import com.android.carbrew.extension.logW
@@ -21,6 +24,7 @@ import com.android.carbrew.extension.visibleAlphaAnimation
 import com.android.carbrew.ui.common.ui.BaseFragment
 import com.android.carbrew.extension.showToast
 import com.android.carbrew.ui.common.ui.BaseActivity
+import com.android.carbrew.util.InjectorUtil
 
 class SearchFragment : BaseFragment() {
     private var _binding: FragmentSearchBinding? = null
@@ -29,7 +33,7 @@ class SearchFragment : BaseFragment() {
 
     private val viewModel by lazy {
         ViewModelProvider(
-            this,
+            this, InjectorUtil.getSearchViewModelFactory()
         ).get(SearchViewModel::class.java)
     }
 
@@ -45,12 +49,19 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.llSearch.visibleAlphaAnimation(500)
+        binding.etQuery.setDrawable(
+            ContextCompat.getDrawable(
+                activity, R.drawable.ic_search_gray_17dp
+            ), 14f, 14f
+        )
         binding.etQuery.setOnEditorActionListener(EditorActionListener(activity, binding))
         binding.tvCancel.setOnClickListener {
             hideSoftKeyboard()
             removeFragment(activity, this)
         }
-
+        val layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager = layoutManager
+        adapter = HotSearchAdapter(this, viewModel.dataList)
         binding.recyclerView.adapter = adapter
         viewModel.onRefresh()
         observe()
@@ -62,9 +73,27 @@ class SearchFragment : BaseFragment() {
         _binding = null
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observe() {
-
+        viewModel.dataListLiveData.observe(viewLifecycleOwner, Observer { result ->
+            binding.etQuery.showSoftKeyboard()
+            val response = result.getOrNull()
+            if (response == null) {
+                result.exceptionOrNull()?.printStackTrace()
+                return@Observer
+            }
+            if (response.isNullOrEmpty() && viewModel.dataList.isEmpty()) {
+                return@Observer
+            }
+            if (response.isNullOrEmpty() && viewModel.dataList.isNotEmpty()) {
+                return@Observer
+            }
+            viewModel.dataList.clear()
+            viewModel.dataList.addAll(response)
+            adapter.notifyDataSetChanged()
+        })
     }
+
 
     private fun hideSoftKeyboard() {
         try {
@@ -108,6 +137,12 @@ class SearchFragment : BaseFragment() {
     }
 
     companion object {
+        fun switchFragment(activity: Activity) {
+            (activity as BaseActivity).supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, SearchFragment()).addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
         fun removeFragment(activity: Activity, fragment: Fragment) {
             (activity as BaseActivity).supportFragmentManager.run {
                 beginTransaction().remove(fragment).commitAllowingStateLoss()

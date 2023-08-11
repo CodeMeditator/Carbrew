@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 
-class MainPageRepository(
+class MainPageRepository private constructor(
     private val mainPageDao: MainPageDao, private val carbrewNetwork: CarbrewNetwork
 ) {
 
@@ -28,5 +28,16 @@ class MainPageRepository(
         val response = carbrewNetwork.fetchHotSearch()
         mainPageDao.cacheHotSearch(response)
         response
+    }
+
+    companion object {
+
+        @Volatile
+        private var INSTANCE: MainPageRepository? = null
+
+        fun getInstance(dao: MainPageDao, network: CarbrewNetwork): MainPageRepository =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: MainPageRepository(dao, network)
+            }
     }
 }

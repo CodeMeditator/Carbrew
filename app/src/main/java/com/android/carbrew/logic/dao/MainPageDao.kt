@@ -2,7 +2,6 @@ package com.android.carbrew.logic.dao
 
 class MainPageDao {
 
-
     fun cacheHotSearch(bean: List<String>?) {
         //TODO("store data to local")
     }

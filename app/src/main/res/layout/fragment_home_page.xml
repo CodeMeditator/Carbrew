@@ -10,15 +10,21 @@
         android:id="@+id/titleBar"
         layout="@layout/layout_main_page_title_bar" />
 
-    <TextView
+    <View
+        android:id="@+id/viewHorizontalLine"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="this is main frag" />
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="this is main frag" />
 
 </LinearLayout>
